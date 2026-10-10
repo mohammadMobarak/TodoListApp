@@ -1,0 +1,55 @@
+﻿@model TodoListApp.Models.TaskItem
+
+@{
+    ViewData["Title"] = "Add New Task";
+}
+
+<div class="container mt-4">
+    <h2>Add New Task</h2>
+    <hr />
+
+    <div class="row">
+        <div class="col-md-6">
+            <!-- enctype="multipart/form-data" is CRITICAL so the file can be uploaded -->
+            <form asp-action="Create" method="post" enctype="multipart/form-data">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <div class="form-group mb-3">
+                    <label asp-for="Title" class="control-label"></label>
+                    <input asp-for="Title" class="form-control" />
+                    <span asp-validation-for="Title" class="text-danger"></span>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label asp-for="Description" class="control-label"></label>
+                    <textarea asp-for="Description" class="form-control" rows="3"></textarea>
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label asp-for="Deadline" class="control-label"></label>
+                    <!-- datetime-local allows picking Year, Month, Day, Hour, and Minute -->
+                    <input asp-for="Deadline" class="form-control" type="datetime-local" />
+                    <span asp-validation-for="Deadline" class="text-danger"></span>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label class="control-label">Upload File (Optional)</label>
+                    <!-- Name matches 'uploadedFile' parameter in our controller -->
+                    <input type="file" name="uploadedFile" class="form-control" />
+                </div>
+
+                <div class="form-group">
+                    <button type="submit" class="btn btn-success">Save</button>
+                    <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
